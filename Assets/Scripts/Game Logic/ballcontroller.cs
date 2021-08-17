@@ -44,5 +44,4 @@ public class ballcontroller : MonoBehaviour
             Destroy(ball.gameObject);
         }
     }
-
 }

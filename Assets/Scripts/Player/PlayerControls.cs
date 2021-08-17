@@ -80,6 +80,7 @@ public class PlayerControls : MonoBehaviour
             directionToShoot = transform.up;
             loadedBall.GetComponent<BallBehaviour>().OnShooting(directionToShoot);
             isLoaded = false;
+            loadedBall.GetComponent<ballcontroller>().lastShot = true;
             loadedBall = null;
             ballSpawn.TransferToCannon();
             ballSpawn.SpawnNewBall();

@@ -18,7 +18,7 @@ public class BallSpawn : MonoBehaviour
 
     [Header("Player state")]
     [SerializeField] private PlayerControls Player; 
-    [SerializeField] private GameObject waitingBall; 
+    private GameObject waitingBall; 
 
     private void Start()
     {

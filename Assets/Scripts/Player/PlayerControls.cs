@@ -18,12 +18,9 @@ public class PlayerControls : MonoBehaviour
 
     [Header ("Other objects")]
 
-    public GameObject Bille;
     public GameObject loadedBall;
 
     [SerializeField] private BallSpawn ballSpawn;
-
-    [SerializeField] private Transform loader;
 
     private Vector3 directionToShoot;
 

@@ -46,6 +46,6 @@ public class BallIdentity : MonoBehaviour
             case "Purple":
                 thisRenderer.material.color = Color.magenta;
                 break;
-        }        
+        }
     }
 }

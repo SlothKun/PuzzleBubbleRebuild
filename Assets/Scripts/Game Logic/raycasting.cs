@@ -24,19 +24,28 @@ public class raycasting : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public List<Transform> Raycast(List<Transform> ballhit)
     {  
         colorCheck = ballColor; // Put that in start after testing
         RaycastHit hit;
+        List<Transform> newhit = new List<Transform>();
         
         foreach (Ray ray in rays) {
             if (Physics.Raycast(ray, out hit, rayLength)) {
                 string hitColor = hit.transform.gameObject.GetComponent<raycasting>().ballColor;
                 if (ballColor == hitColor) {
-                    Vector3 hitPos = hit.transform.position - transform.position;
+                    Vector3 hitPos = hit.transform.position - transform.position;  
                     Debug.DrawRay(transform.position, hitPos, Color.green);
+
+                    if (!ballhit.Contains(hit.transform)) {
+                        newhit.Add(hit.transform);
+                    }
+                    
+                    Debug.Log(hit.transform.gameObject.GetInstanceID());
+                    Debug.Log(hit.transform.GetType());
                 }
             }
         }
+        return newhit;
     }
 }

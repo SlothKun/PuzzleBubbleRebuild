@@ -628,6 +628,13 @@ MonoBehaviour:
   waitingPosition: {fileID: 1253769848}
   loadPosition: {fileID: 1948833262}
   Ball: {fileID: 8482634536025766295, guid: 7a983c2e7663ede4582cd3a962ac4979, type: 3}
+  possibleColors:
+  - Red
+  - Yellow
+  - Green
+  - Blue
+  - Black
+  - Purple
   timeToWaitSpot: 3
   Player: {fileID: 1446005244}
   waitingBall: {fileID: 0}

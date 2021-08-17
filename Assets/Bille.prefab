@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2424387272329345908}
   - component: {fileID: 2622891576595018277}
   - component: {fileID: 4648038785705502681}
+  - component: {fileID: 5234628794548643873}
   m_Layer: 0
   m_Name: Bille
   m_TagString: Untagged
@@ -110,3 +111,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   isMoving: 0
+--- !u!114 &5234628794548643873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8482634536025766295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6f5ccc4d0da5f2458f3c48347793b88, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  possibleColors:
+  - Red
+  - Yellow
+  - Green
+  - Blue
+  - Black
+  - Purple
+  myColor: 

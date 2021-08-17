@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 896015751252455163}
   m_Layer: 6
   m_Name: Bille
-  m_TagString: Untagged
+  m_TagString: Bobble
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -120,6 +120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridScript: {fileID: 0}
+  closestPlace: {fileID: 0}
   moveSpeed: 8
   isMoving: 0
   Shot: 0
@@ -156,7 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 754894f78370beb4398ec98ccb74e0c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayLength: 2
+  rayLength: 0.7
   ballColor: 
   colorCheck: 
 --- !u!114 &-8310948252387856868
@@ -171,10 +172,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 750cd7f44eea8c242b4cd334fe5902af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ballhit: []
-  newhit: []
   lastShot: 0
   ballBehaviour: {fileID: 0}
+  minCombo: 3
 --- !u!135 &896015751252455163
 SphereCollider:
   m_ObjectHideFlags: 0

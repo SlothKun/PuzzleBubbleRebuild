@@ -5,11 +5,12 @@ using UnityEngine;
 public class ballcontroller : MonoBehaviour
 {
     // Use of hashset to not bother with duplicates
-    public List<Transform> ballhit = new List<Transform>();
-    public List<Transform> newhit = new List<Transform>();
+    private List<Transform> ballhit = new List<Transform>();
+    private List<Transform> newhit = new List<Transform>();
     private bool newadd;
     public bool lastShot;
     [SerializeField] private BallBehaviour ballBehaviour;
+    [SerializeField] private int minCombo;
 
     private void Awake()
     {
@@ -44,7 +45,7 @@ public class ballcontroller : MonoBehaviour
                 print(ballhit.Count);
             }
 
-            if (ballhit.Count >= 3)
+            if (ballhit.Count >= minCombo)
             {
                 DestroyChainedBalls(ballhit);
             }
@@ -55,8 +56,11 @@ public class ballcontroller : MonoBehaviour
         }
     }
 
-    void DestroyChainedBalls(List<Transform> ballhit) {
-        foreach (Transform ball in ballhit) {
+    private void DestroyChainedBalls(List<Transform> ballhit) 
+    {
+        foreach (Transform ball in ballhit) 
+        {
+            ballBehaviour.closestPlace.gameObject.GetComponent<GridPlace>().occupied = false;
             Destroy(ball.gameObject);
         }
     }

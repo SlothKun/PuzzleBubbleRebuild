@@ -6,11 +6,11 @@ public class BallIdentity : MonoBehaviour
 {
     [SerializeField] private string[] possibleColors;
     public string myColor;
-    [SerializeField] private Renderer thisRenderer;
+    private Animator thisRenderer;
 
     private void Awake()
     {
-        thisRenderer = GetComponent<Renderer>();
+        thisRenderer = GetComponent<Animator>();
     }
 
     void Start()
@@ -29,22 +29,22 @@ public class BallIdentity : MonoBehaviour
         switch (myColor)
         {
             case "Red":
-                thisRenderer.material.color = Color.red;
+                thisRenderer.Play("RedBobble");
                 break;
             case "Yellow":
-                thisRenderer.material.color = Color.yellow;
+                thisRenderer.Play("YellowBobble");
                 break;
             case "Green":
-                thisRenderer.material.color = Color.green;
+                thisRenderer.Play("GreenBobble");
                 break;
             case "Blue":
-                thisRenderer.material.color = Color.blue;
+                thisRenderer.Play("BlueBobble");
                 break;
             case "Black":
-                thisRenderer.material.color = Color.black;
+                thisRenderer.Play("BlackBobble");
                 break;
             case "Purple":
-                thisRenderer.material.color = Color.magenta;
+                thisRenderer.Play("PurpleBobble");
                 break;
         }
     }

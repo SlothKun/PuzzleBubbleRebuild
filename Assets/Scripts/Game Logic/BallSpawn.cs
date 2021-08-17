@@ -22,7 +22,15 @@ public class BallSpawn : MonoBehaviour
 
     private void Start()
     {
+        StartingBall();
         SpawnNewBall();
+    }
+
+    public void StartingBall()
+    {
+        GameObject startingBall = Instantiate(Ball, loadPosition.position, Quaternion.identity);
+        Player.loadedBall = startingBall;
+        Player.isLoaded = true;
     }
 
     public void SpawnNewBall()
@@ -35,17 +43,12 @@ public class BallSpawn : MonoBehaviour
     {
         newBall.transform.DOMove(waitingPosition.position, timeToWaitSpot, false);
         waitingBall = newBall;
-
-        if (!Player.isLoaded)
-        {
-            TransferToCannon(waitingBall);
-        }
     }
 
-    void TransferToCannon(GameObject currentBall)
+    public void TransferToCannon()
     {
-        currentBall.transform.DOMove(loadPosition.position, timeToWaitSpot, false);
-        Player.loadedBall = currentBall;
+        waitingBall.transform.DOMove(loadPosition.position, timeToWaitSpot, false);
+        Player.loadedBall = waitingBall;
         StartCoroutine("confirmLoaded");
     }
 

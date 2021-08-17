@@ -21,6 +21,8 @@ public class PlayerControls : MonoBehaviour
     public GameObject Bille;
     public GameObject loadedBall;
 
+    [SerializeField] private BallSpawn ballSpawn;
+
     [SerializeField] private Transform loader;
 
     private Vector3 directionToShoot;
@@ -80,7 +82,10 @@ public class PlayerControls : MonoBehaviour
         {
             directionToShoot = transform.up;
             loadedBall.GetComponent<BallBehaviour>().OnShooting(directionToShoot);
+            isLoaded = false;
             loadedBall = null;
+            ballSpawn.TransferToCannon();
+            ballSpawn.SpawnNewBall();
         }
     }
 

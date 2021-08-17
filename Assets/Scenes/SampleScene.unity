@@ -593,6 +593,7 @@ MonoBehaviour:
   isLoaded: 0
   Bille: {fileID: 8482634536025766295, guid: 7a983c2e7663ede4582cd3a962ac4979, type: 3}
   loadedBall: {fileID: 0}
+  ballSpawn: {fileID: 1906547199}
   loader: {fileID: 1948833262}
 --- !u!1 &1906547198
 GameObject:

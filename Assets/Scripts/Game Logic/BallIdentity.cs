@@ -10,12 +10,12 @@ public class BallIdentity : MonoBehaviour
 
     private void Awake()
     {
+        AssignColor();
         thisRenderer = GetComponent<Animator>();
     }
 
     void Start()
     {
-        AssignColor();
         DisplayColor();
     }
 

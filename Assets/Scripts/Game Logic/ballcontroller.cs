@@ -60,6 +60,7 @@ public class ballcontroller : MonoBehaviour
     {
         foreach (Transform ball in ballhit) 
         {
+            ball.gameObject.GetComponent<BallBehaviour>().otherBalls.Remove(ball.gameObject);
             Destroy(ball.gameObject);
         }
     }

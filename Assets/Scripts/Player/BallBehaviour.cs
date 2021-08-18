@@ -6,7 +6,7 @@ public class BallBehaviour : MonoBehaviour
 {
     [Header("In Game")]
     public Transform closestPlace;
-    private List<GameObject> otherBalls = new List<GameObject>();
+    public List<GameObject> otherBalls = new List<GameObject>();
     [SerializeField] GridScript gridScript;    
 
     [SerializeField] private float moveSpeed;
@@ -14,14 +14,12 @@ public class BallBehaviour : MonoBehaviour
     public bool Shot;
     public bool Placed;
     private Vector3 Direction;
-
-    [Header("Before Start")]
-    public bool starterBobble;
+    
 
     private void Start()
     {
         gridScript = GameObject.Find("Grid").GetComponent<GridScript>();
-        if (starterBobble)
+        if (GetComponent<BallIdentity>().starterBobble)
         {
             PlaceMe();
         }
@@ -86,6 +84,7 @@ public class BallBehaviour : MonoBehaviour
 
     private void OnBecameInvisible()
     {
+        otherBalls.Remove(this.gameObject);
         Destroy(gameObject);
     }
 }

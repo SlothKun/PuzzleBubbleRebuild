@@ -14,32 +14,32 @@ public class raycasting : MonoBehaviour
         ballColor = GetComponent<BallIdentity>().myColor;
     }
 
-    public List<Transform> Raycast(List<Transform> ballhit)
-    {  
+    // Added
+    public List<Transform> GetSurrounding(HashSet<Transform> blacklist, bool colorCheck) 
+    {
         RaycastHit hit;
-        List<Transform> newhit = new List<Transform>();
+        List<Transform> surrounding = new List<Transform>();
         
         foreach (Ray ray in rays) 
         {
             if (Physics.Raycast(ray, out hit, rayLength)) 
             {
                 string hitColor = hit.transform.gameObject.GetComponent<raycasting>().ballColor;
-                if (ballColor == hitColor) 
-                {
+                if (ballColor == hitColor || colorCheck == false) {
                     Vector3 hitPos = hit.transform.position - transform.position;  
+
+                    // Visual debug
                     Debug.DrawRay(transform.position, hitPos, Color.green);
 
-                    if (!ballhit.Contains(hit.transform)) {
-                        newhit.Add(hit.transform);
+                    if (!blacklist.Contains(hit.transform)) {
+                        surrounding.Add(hit.transform);
                     }
-                    
-                    Debug.Log(hit.transform.gameObject.GetInstanceID());
-                    Debug.Log(hit.transform.GetType());
                 }
             }
         }
-        return newhit;
+        return surrounding;
     }
+
 
     public void drawRays()
     {

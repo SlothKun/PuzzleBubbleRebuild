@@ -27,19 +27,42 @@ public class raycasting : MonoBehaviour
                 if (ballColor == hitColor) 
                 {
                     Vector3 hitPos = hit.transform.position - transform.position;  
-                    Debug.DrawRay(transform.position, hitPos, Color.green);
+                    
+                    // Visual debug (added)
+                    // Debug.DrawRay(transform.position, hitPos, Color.green);
 
                     if (!ballhit.Contains(hit.transform)) {
                         newhit.Add(hit.transform);
                     }
-                    
-                    Debug.Log(hit.transform.gameObject.GetInstanceID());
-                    Debug.Log(hit.transform.GetType());
                 }
             }
         }
         return newhit;
     }
+
+    // Added
+    public List<Transform> GetSurrounding(HashSet<Transform> blacklist) 
+    {
+        RaycastHit hit;
+        List<Transform> surrounding = new List<Transform>();
+        
+        foreach (Ray ray in rays) 
+        {
+            if (Physics.Raycast(ray, out hit, rayLength)) 
+            {
+                Vector3 hitPos = hit.transform.position - transform.position;  
+
+                // Visual debug
+                Debug.DrawRay(transform.position, hitPos, Color.green);
+
+                if (!blacklist.Contains(hit.transform)) {
+                    surrounding.Add(hit.transform);
+                }
+            }
+        }
+        return surrounding;
+    }
+
 
     public void drawRays()
     {

@@ -14,14 +14,12 @@ public class BallBehaviour : MonoBehaviour
     public bool Shot;
     public bool Placed;
     private Vector3 Direction;
-
-    [Header("Before Start")]
-    public bool starterBobble;
+    
 
     private void Start()
     {
         gridScript = GameObject.Find("Grid").GetComponent<GridScript>();
-        if (starterBobble)
+        if (GetComponent<BallIdentity>().starterBobble)
         {
             PlaceMe();
         }

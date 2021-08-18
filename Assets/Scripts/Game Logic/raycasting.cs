@@ -14,34 +14,8 @@ public class raycasting : MonoBehaviour
         ballColor = GetComponent<BallIdentity>().myColor;
     }
 
-    public List<Transform> Raycast(List<Transform> ballhit)
-    {  
-        RaycastHit hit;
-        List<Transform> newhit = new List<Transform>();
-        
-        foreach (Ray ray in rays) 
-        {
-            if (Physics.Raycast(ray, out hit, rayLength)) 
-            {
-                string hitColor = hit.transform.gameObject.GetComponent<raycasting>().ballColor;
-                if (ballColor == hitColor) 
-                {
-                    Vector3 hitPos = hit.transform.position - transform.position;  
-                    
-                    // Visual debug (added)
-                    // Debug.DrawRay(transform.position, hitPos, Color.green);
-
-                    if (!ballhit.Contains(hit.transform)) {
-                        newhit.Add(hit.transform);
-                    }
-                }
-            }
-        }
-        return newhit;
-    }
-
     // Added
-    public List<Transform> GetSurrounding(HashSet<Transform> blacklist) 
+    public List<Transform> GetSurrounding(HashSet<Transform> blacklist, bool colorCheck) 
     {
         RaycastHit hit;
         List<Transform> surrounding = new List<Transform>();
@@ -50,13 +24,16 @@ public class raycasting : MonoBehaviour
         {
             if (Physics.Raycast(ray, out hit, rayLength)) 
             {
-                Vector3 hitPos = hit.transform.position - transform.position;  
+                string hitColor = hit.transform.gameObject.GetComponent<raycasting>().ballColor;
+                if (ballColor == hitColor || colorCheck == false) {
+                    Vector3 hitPos = hit.transform.position - transform.position;  
 
-                // Visual debug
-                Debug.DrawRay(transform.position, hitPos, Color.green);
+                    // Visual debug
+                    Debug.DrawRay(transform.position, hitPos, Color.green);
 
-                if (!blacklist.Contains(hit.transform)) {
-                    surrounding.Add(hit.transform);
+                    if (!blacklist.Contains(hit.transform)) {
+                        surrounding.Add(hit.transform);
+                    }
                 }
             }
         }

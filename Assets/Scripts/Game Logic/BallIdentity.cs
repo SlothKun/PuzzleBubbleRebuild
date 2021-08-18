@@ -6,7 +6,10 @@ public class BallIdentity : MonoBehaviour
 {
     [SerializeField] private string[] possibleColors;
     public string myColor;
+    public string startingColor;
     private Animator thisRenderer;
+
+    public bool starterBobble;
 
     private void Awake()
     {
@@ -21,7 +24,14 @@ public class BallIdentity : MonoBehaviour
 
     void AssignColor()
     {
-        myColor = possibleColors[Random.Range(0, possibleColors.Length)];
+        if (!starterBobble)
+        {
+            myColor = possibleColors[Random.Range(0, possibleColors.Length)];
+        }
+        else
+        {
+            myColor = startingColor;
+        }
     }
 
     void DisplayColor()

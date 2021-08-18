@@ -60,7 +60,6 @@ public class ballcontroller : MonoBehaviour
     {
         foreach (Transform ball in ballhit) 
         {
-            ballBehaviour.closestPlace.gameObject.GetComponent<GridPlace>().occupied = false;
             Destroy(ball.gameObject);
         }
     }

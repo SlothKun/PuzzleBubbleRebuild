@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class BallBehaviour : MonoBehaviour
 {
-    private List<GameObject> otherBalls = new List<GameObject>();
-    [SerializeField] GridScript gridScript;
+    [Header("In Game")]
     public Transform closestPlace;
+    private List<GameObject> otherBalls = new List<GameObject>();
+    [SerializeField] GridScript gridScript;    
 
     [SerializeField] private float moveSpeed;
     public bool isMoving;
@@ -14,25 +15,24 @@ public class BallBehaviour : MonoBehaviour
     public bool Placed;
     private Vector3 Direction;
 
-    private Vector3 previousPos;
+    [Header("Before Start")]
+    public bool starterBobble;
 
     private void Start()
     {
         gridScript = GameObject.Find("Grid").GetComponent<GridScript>();
+        if (starterBobble)
+        {
+            PlaceMe();
+        }
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        previousPos = transform.position;
-
-        if (isMoving)
+        if (isMoving && !Placed)
         {
-            transform.position += Direction * moveSpeed * Time.deltaTime;
+            transform.position += Direction * moveSpeed * Time.fixedDeltaTime;
             DetectCollision();
-        }
-        else if (!isMoving && Shot)
-        {
-            Placed = true;
         }
     }
 
@@ -56,29 +56,6 @@ public class BallBehaviour : MonoBehaviour
                 }
             }
         }
-
-        /*int layerMask = 1 << 6 | 1 << 7;
-
-        RaycastHit[] hits = Physics.RaycastAll(new Ray(previousPos, (transform.position - previousPos).normalized), (transform.position - previousPos).magnitude, layerMask);
-
-        for (int i = 0; i < hits.Length; i++)
-        {
-            RaycastHit hit = hits[i];
-            foreach (Transform placement in gridScript.gridPlace)
-            {
-                if (!placement.gameObject.GetComponent<GridPlace>().occupied)
-                {
-                    if (!closestPlace)
-                    {
-                        closestPlace = placement;
-                    }
-
-                    if (Vector3.Distance(placement.position, hit.transform.position) <= Vector3.Distance(closestPlace.position, hit.transform.position))
-                    {
-                        closestPlace = placement;
-                    }
-                }
-            }*/
     }
 
     private void PlaceMe()
@@ -100,8 +77,15 @@ public class BallBehaviour : MonoBehaviour
         }
 
         transform.position = closestPlace.position;
+        Placed = true;
         closestPlace.gameObject.GetComponent<GridPlace>().occupied = true;
+        closestPlace.gameObject.GetComponent<GridPlace>().Bobble = this.gameObject;
         isMoving = false;
         GetComponent<raycasting>().drawRays();
+    }
+
+    private void OnBecameInvisible()
+    {
+        Destroy(gameObject);
     }
 }

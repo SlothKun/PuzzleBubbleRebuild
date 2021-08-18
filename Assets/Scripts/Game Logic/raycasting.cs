@@ -19,10 +19,13 @@ public class raycasting : MonoBehaviour
         RaycastHit hit;
         List<Transform> newhit = new List<Transform>();
         
-        foreach (Ray ray in rays) {
-            if (Physics.Raycast(ray, out hit, rayLength)) {
+        foreach (Ray ray in rays) 
+        {
+            if (Physics.Raycast(ray, out hit, rayLength)) 
+            {
                 string hitColor = hit.transform.gameObject.GetComponent<raycasting>().ballColor;
-                if (ballColor == hitColor) {
+                if (ballColor == hitColor) 
+                {
                     Vector3 hitPos = hit.transform.position - transform.position;  
                     Debug.DrawRay(transform.position, hitPos, Color.green);
 

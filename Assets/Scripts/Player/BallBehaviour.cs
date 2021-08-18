@@ -6,7 +6,7 @@ public class BallBehaviour : MonoBehaviour
 {
     [Header("In Game")]
     public Transform closestPlace;
-    private List<GameObject> otherBalls = new List<GameObject>();
+    public List<GameObject> otherBalls = new List<GameObject>();
     [SerializeField] GridScript gridScript;    
 
     [SerializeField] private float moveSpeed;
@@ -84,6 +84,7 @@ public class BallBehaviour : MonoBehaviour
 
     private void OnBecameInvisible()
     {
+        otherBalls.Remove(this.gameObject);
         Destroy(gameObject);
     }
 }

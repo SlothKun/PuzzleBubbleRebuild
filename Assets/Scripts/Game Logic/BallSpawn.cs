@@ -36,6 +36,8 @@ public class BallSpawn : MonoBehaviour
 
     public void SpawnNewBall()
     {
+        Vector3 currentRot = Crank.transform.localRotation.eulerAngles;
+        Crank.transform.DORotate(new Vector3(0f, 0f, 180f) + currentRot, 1f, RotateMode.FastBeyond360);
         GameObject newBall = Instantiate(Ball, spawnPosition.position, Quaternion.identity);
         TransferToWait(newBall);
     }

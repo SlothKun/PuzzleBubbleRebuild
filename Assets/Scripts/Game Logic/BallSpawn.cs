@@ -12,6 +12,7 @@ public class BallSpawn : MonoBehaviour
 
     [Header("What to spawn")]
     [SerializeField] private GameObject Ball;
+    [SerializeField] private GameObject Crank;
 
     [Header("Time Values")]
     [SerializeField] private float timeToWaitSpot;

@@ -7,7 +7,7 @@ public class ballcontroller : MonoBehaviour
     // Use of hashset to not bother with duplicates
     private HashSet<Transform> ballsToBeChecked = new HashSet<Transform>();
     private List<Transform> newhit = new List<Transform>();
-    private List<Transform> neighbours = new List<Transform>(); // added
+    private List<List<Transform>> neighboursSet = new List<List<Transform>>(); // added
     private List<Transform> tempNeighboursDetected = new List<Transform>(); // added
 
     private HashSet<Transform> blacklist = new HashSet<Transform>(); // added
@@ -33,6 +33,7 @@ public class ballcontroller : MonoBehaviour
     {
         if (lastShot && ballBehaviour.Placed)
         {
+            // Get balls combo
             while (newadd)
             {
                 newhit.Clear();
@@ -49,13 +50,25 @@ public class ballcontroller : MonoBehaviour
             {
                 print("ball hit : " + ballsToBeChecked.Count);
                 blacklist.UnionWith(ballsToBeChecked); // These ball will be destroy so they need not to be checked
+                
                 // Check wannabe destroyed balls' neighbours and put them in a list
                 foreach (Transform ball in ballsToBeChecked) {
+                    bool alreadyInSet = false;
                     tempNeighboursDetected.AddRange(ball.gameObject.GetComponent<raycasting>().GetSurrounding(blacklist, false));
                     blacklist.UnionWith(tempNeighboursDetected); // Add new detected to the blacklist to avoid duplicates
-                    // Find set of neighbours
-                    // Put them in neighbours set (a list of list)
-                    neighbours.AddRange(tempNeighboursDetected); // Get rid of this after
+
+                    foreach (Transform tempNeighbour in tempNeighboursDetected) {
+                        // If ball is already in a set, there's no need to check it
+                        foreach (List<Transform> set in neighboursSet) {
+                            if (set.Contains(tempNeighbour)) {
+                                alreadyInSet = true;
+                            }
+                        }
+
+                        if (alreadyInSet == false) {
+                            neighboursSet.Add(tempNeighbour.gameObject.GetComponent<raycasting>().FindSet(ballsToBeChecked));
+                        }
+                    }
                     
                     tempNeighboursDetected.Clear();
                 }
@@ -63,9 +76,8 @@ public class ballcontroller : MonoBehaviour
                 DestroyChainedBalls(ballsToBeChecked);
                 blacklist.Clear();
 
-                print("neighbours : " + neighbours.Count);
+                print("neighbours nb of set : " + neighboursSet.Count);
 
-                // check each ball 1 by 1
                 // If checked ball of its surrounding doesn't have surrounding pos 1&2 fixed
                 // Then contaminate the whole chain
                 // But, if 1 ball in the chain is fixed to the ceiling -> decontaminate
@@ -74,6 +86,7 @@ public class ballcontroller : MonoBehaviour
                 
             }
 
+            neighboursSet.Clear();
             ballsToBeChecked.Clear();
 
             lastShot = false;

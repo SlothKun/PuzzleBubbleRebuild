@@ -24,17 +24,20 @@ public class raycasting : MonoBehaviour
         {
             if (Physics.Raycast(ray, out hit, rayLength)) 
             {
-                string hitColor = hit.transform.gameObject.GetComponent<raycasting>().ballColor;
-                if (ballColor == hitColor || colorCheck == false) {
-                    Vector3 hitPos = hit.transform.position - transform.position;  
+                if (hit.transform.gameObject.tag == "Bobble") {
+                    string hitColor = hit.transform.gameObject.GetComponent<raycasting>().ballColor;
+                    if (ballColor == hitColor || colorCheck == false) {
+                        Vector3 hitPos = hit.transform.position - transform.position;  
 
-                    // Visual debug
-                    Debug.DrawRay(transform.position, hitPos, Color.green);
+                        // Visual debug
+                        Debug.DrawRay(transform.position, hitPos, Color.green);
 
-                    if (!blacklist.Contains(hit.transform)) {
-                        surrounding.Add(hit.transform);
+                        if (!blacklist.Contains(hit.transform)) {
+                            surrounding.Add(hit.transform);
+                        }
                     }
                 }
+
             }
         }
         return surrounding;

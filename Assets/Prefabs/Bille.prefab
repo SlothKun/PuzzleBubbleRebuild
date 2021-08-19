@@ -76,7 +76,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 8e1a8583921e4db40a9c6ea4994b3cf4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -146,6 +146,8 @@ MonoBehaviour:
   - Blue
   - Black
   - Purple
+  currentColors: []
+  otherBalls: []
   myColor: 
   startingColor: 
   falling: 0

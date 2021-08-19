@@ -52,20 +52,25 @@ public class ballcontroller : MonoBehaviour
                 blacklist.UnionWith(ballsToBeChecked); // These ball will be destroy so they need not to be checked
                 
                 // Check set of ball around comboBall
-                foreach (Transform ball in ballsToBeChecked) {
+                foreach (Transform ball in ballsToBeChecked) 
+                {
                     bool alreadyInSet = false;
                     tempNeighboursDetected.AddRange(ball.gameObject.GetComponent<raycasting>().GetSurrounding(blacklist, false));
                     blacklist.UnionWith(tempNeighboursDetected); // Add new detected to the blacklist to avoid duplicates
 
-                    foreach (Transform tempNeighbour in tempNeighboursDetected) {
+                    foreach (Transform tempNeighbour in tempNeighboursDetected) 
+                    {
                         // If ball is already in a set, there's no need to check it
-                        foreach (List<Transform> set in neighboursSet) {
-                            if (set.Contains(tempNeighbour)) {
+                        foreach (List<Transform> set in neighboursSet) 
+                        {
+                            if (set.Contains(tempNeighbour)) 
+                            {
                                 alreadyInSet = true;
                             }
                         }
 
-                        if (alreadyInSet == false) {
+                        if (alreadyInSet == false) 
+                        {
                             neighboursSet.Add(tempNeighbour.gameObject.GetComponent<raycasting>().FindSet(ballsToBeChecked));
                         }
                     }
@@ -78,28 +83,34 @@ public class ballcontroller : MonoBehaviour
                 print("neighbours nb of set : " + neighboursSet.Count);
 
                 // Check falling state
-                foreach (List<Transform> set in neighboursSet) {
+                foreach (List<Transform> set in neighboursSet) 
+                {
                     bool falling = false;
                     bool roofhit = false;
                     string state;
-                    foreach (Transform ball in set) {
-                        if (!roofhit) {
+                    foreach (Transform ball in set) 
+                    {
+                        if (!roofhit) 
+                        {
                             state = ball.gameObject.GetComponent<raycasting>().IsBallFalling();
-                            if (state == "falling") {
+                            if (state == "falling") 
+                            {
                                 falling = true;
-                            } else if (state == "roof") {
+                            } 
+                            else if (state == "roof") 
+                            {
                                 roofhit = true;
                             }
                         }
                     }
                     
                     // If ball is falling, change its state
-                    if (roofhit == false && falling == true) {
-                        foreach (Transform ball in set) {
+                    if (roofhit == false && falling == true) 
+                    {
+                        foreach (Transform ball in set) 
+                        {
                             ball.gameObject.GetComponent<BallIdentity>().falling = true;
-
-                            //Debug only
-                            //DestroyBall(ball);
+                            ball.gameObject.GetComponent<BallBehaviour>().Fall(ball.gameObject);
                         }
                     }
                 }  
@@ -112,17 +123,11 @@ public class ballcontroller : MonoBehaviour
         }
     }
 
-    private void DestroyBall(Transform ball) 
-    {
-        ball.gameObject.GetComponent<BallBehaviour>().otherBalls.Remove(ball.gameObject);
-        Destroy(ball.gameObject);
-    }
     private void DestroyChainedBalls(HashSet<Transform> ballhit) 
     {
         foreach (Transform ball in ballhit) 
         {
-            ball.gameObject.GetComponent<BallBehaviour>().otherBalls.Remove(ball.gameObject);
-            Destroy(ball.gameObject);
+            ball.GetComponent<BallBehaviour>().DestroyBall(ball.gameObject);
         }
     }
 }

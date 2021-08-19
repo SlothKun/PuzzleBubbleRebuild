@@ -10,6 +10,7 @@ public class BallBehaviour : MonoBehaviour
     [SerializeField] private GridScript gridScript;    
 
     [SerializeField] private float moveSpeed;
+    [SerializeField] private float fallSpeed;
     [SerializeField] private float reflectOffset;
     public bool isMoving;
     public bool Shot;
@@ -35,6 +36,11 @@ public class BallBehaviour : MonoBehaviour
             DetectWall();
             DetectCollision();
         }
+
+        if (GetComponent<BallIdentity>().falling)
+        {
+            transform.position += -Vector3.up * Time.fixedDeltaTime * fallSpeed;
+        }
     }
 
     public void OnShooting(Vector3 canonDirection)
@@ -50,7 +56,7 @@ public class BallBehaviour : MonoBehaviour
     {
         foreach(GameObject bobble in otherBalls)
         {
-            if (!bobble.Equals(this.gameObject))
+            if (!bobble.Equals(this.gameObject) && !bobble.GetComponent<BallIdentity>().falling)
             {
                 if (Vector3.Distance(transform.position, bobble.transform.position) <= 0.6f)
                 {

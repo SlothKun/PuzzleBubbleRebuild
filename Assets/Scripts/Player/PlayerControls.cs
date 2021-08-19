@@ -22,7 +22,7 @@ public class PlayerControls : MonoBehaviour
 
     [SerializeField] private BallSpawn ballSpawn;
 
-    private Vector3 directionToShoot;
+    public Vector3 directionToShoot;
 
     private void Start()
     {

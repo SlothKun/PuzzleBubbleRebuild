@@ -123,6 +123,42 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &31361127 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5995438866292214413, guid: b30f968f5ae97214ea6f40f690a44ece, type: 3}
+  m_PrefabInstance: {fileID: 2805195615344285254}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &31361128 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5995438866292214412, guid: b30f968f5ae97214ea6f40f690a44ece, type: 3}
+  m_PrefabInstance: {fileID: 2805195615344285254}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 31361127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6995269af92a1c1428e36df6de32486d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &31361131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 31361127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cca50ca0d4f87e34da2163e0b5b591d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nbrPoints: 30
+  TotalBounce: 3
+  LineOffset: 0.01
+  pointsPref: {fileID: 9431530627153344, guid: 0f24294d7ef0a884785cda35f7df9400, type: 3}
+  Points: []
+  currentPointPos: {x: 0, y: 0, z: 0}
+  direction: {x: 0, y: 0, z: 0}
+  cannon: {fileID: 31361128}
 --- !u!1001 &34087420
 PrefabInstance:
   m_ObjectHideFlags: 0

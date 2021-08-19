@@ -51,7 +51,7 @@ public class ballcontroller : MonoBehaviour
                 print("ball hit : " + ballsToBeChecked.Count);
                 blacklist.UnionWith(ballsToBeChecked); // These ball will be destroy so they need not to be checked
                 
-                // Check wannabe destroyed balls' neighbours and put them in a list
+                // Check set of ball around comboBall
                 foreach (Transform ball in ballsToBeChecked) {
                     bool alreadyInSet = false;
                     tempNeighboursDetected.AddRange(ball.gameObject.GetComponent<raycasting>().GetSurrounding(blacklist, false));
@@ -75,12 +75,37 @@ public class ballcontroller : MonoBehaviour
 
                 DestroyChainedBalls(ballsToBeChecked);
                 blacklist.Clear();
-
                 print("neighbours nb of set : " + neighboursSet.Count);
 
-                // If checked ball of its surrounding doesn't have surrounding pos 1&2 fixed
-                // Then contaminate the whole chain
-                // But, if 1 ball in the chain is fixed to the ceiling -> decontaminate
+                // Check falling state
+                foreach (List<Transform> set in neighboursSet) {
+                    bool falling = false;
+                    bool roofhit = false;
+                    string state;
+                    foreach (Transform ball in set) {
+                        if (!roofhit) {
+                            state = ball.gameObject.GetComponent<raycasting>().IsBallFalling();
+                            if (state == "falling") {
+                                falling = true;
+                            } else if (state == "roof") {
+                                roofhit = true;
+                            }
+                        }
+                    }
+                    
+                    if (roofhit == false && falling == true) {
+                        foreach (Transform ball in set) {
+                            DestroyBall(ball);
+                            //ball.gameObject.GetComponent<BallIdentity>().falling = true;
+
+                            //Debug only
+                            //ball.gameObject.GetComponent<BallIdentity>().myColor = "Green";
+                            // v Remove public when done debugging v
+                            //ball.gameObject.GetComponent<BallIdentity>().DisplayColor();
+                        }
+                    }
+                }
+
                 // Make sure neighbours is cleared
                 // end
                 
@@ -93,6 +118,11 @@ public class ballcontroller : MonoBehaviour
         }
     }
 
+    private void DestroyBall(Transform ball) 
+    {
+        ball.gameObject.GetComponent<BallBehaviour>().otherBalls.Remove(ball.gameObject);
+        Destroy(ball.gameObject);
+    }
     private void DestroyChainedBalls(HashSet<Transform> ballhit) 
     {
         foreach (Transform ball in ballhit) 

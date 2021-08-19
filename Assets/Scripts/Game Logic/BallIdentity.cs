@@ -36,7 +36,8 @@ public class BallIdentity : MonoBehaviour
         }
     }
 
-    void DisplayColor()
+    // Remove public when done debugging
+    public void DisplayColor()
     {
         switch (myColor)
         {

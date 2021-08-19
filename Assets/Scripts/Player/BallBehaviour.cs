@@ -7,13 +7,15 @@ public class BallBehaviour : MonoBehaviour
     [Header("In Game")]
     public Transform closestPlace;
     public List<GameObject> otherBalls = new List<GameObject>();
-    [SerializeField] GridScript gridScript;    
+    [SerializeField] private GridScript gridScript;    
 
     [SerializeField] private float moveSpeed;
+    [SerializeField] private float reflectOffset;
     public bool isMoving;
     public bool Shot;
     public bool Placed;
     private Vector3 Direction;
+    private Vector3 Origin;
     
 
     private void Start()
@@ -30,12 +32,14 @@ public class BallBehaviour : MonoBehaviour
         if (isMoving && !Placed)
         {
             transform.position += Direction * moveSpeed * Time.fixedDeltaTime;
+            DetectWall();
             DetectCollision();
         }
     }
 
     public void OnShooting(Vector3 canonDirection)
     {
+        Origin = (Vector3)transform.position + reflectOffset * canonDirection;
         isMoving = true;
         Shot = true;
         Direction = canonDirection;
@@ -52,6 +56,23 @@ public class BallBehaviour : MonoBehaviour
                 {
                     PlaceMe();
                 }
+            }
+        }
+    }
+
+    private void DetectWall()
+    {
+        int layerMask = 1 << 7;
+
+        if (Physics.CheckSphere(transform.position, 0.3f, layerMask))
+        {
+            Debug.Log("Wall detected");
+
+            RaycastHit hit;
+            if (Physics.Raycast(Origin, Direction, out hit, Mathf.Infinity, layerMask))
+            {
+                Direction = Vector3.Reflect(Direction.normalized, hit.normal);
+                Origin = hit.point + reflectOffset * Direction;
             }
         }
     }

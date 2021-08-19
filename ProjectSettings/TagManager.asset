@@ -7,6 +7,7 @@ TagManager:
   - GridPlace
   - Bobble
   - Walls
+  - Roof
   layers:
   - Default
   - TransparentFX

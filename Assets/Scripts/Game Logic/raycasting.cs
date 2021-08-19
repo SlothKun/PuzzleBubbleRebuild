@@ -24,15 +24,15 @@ public class raycasting : MonoBehaviour
         {
             if (Physics.Raycast(ray, out hit, rayLength)) 
             {
-                if (hit.transform.gameObject.tag == "Bobble") {
+                if (hit.transform.gameObject.tag.Equals("Bobble")) {
                     string hitColor = hit.transform.gameObject.GetComponent<raycasting>().ballColor;
                     if (ballColor == hitColor || colorCheck == false) {
                         Vector3 hitPos = hit.transform.position - transform.position;  
 
-                        // Visual debug
-                        Debug.DrawRay(transform.position, hitPos, Color.green);
-
+                        
                         if (!blacklist.Contains(hit.transform)) {
+                            // Visual debug
+                            Debug.DrawRay(transform.position, hitPos, Color.green);
                             surrounding.Add(hit.transform);
                         }
                     }
@@ -67,6 +67,32 @@ public class raycasting : MonoBehaviour
         return set;
     }
 
+    public string IsBallFalling() {
+        RaycastHit hit;
+        bool ballTouched = false;
+        for (int i=1; i < 2; i++) {
+            if (Physics.Raycast(rays[i], out hit, rayLength)) {
+                Vector3 hitPos = hit.transform.position - transform.position;
+                Debug.DrawRay(transform.position, hitPos, Color.red);
+                print(hit.transform.gameObject.tag);
+                if (hit.transform.gameObject.tag.Equals("Roof")) {
+                    print("roof !");
+                    return "roof";
+                } else if (hit.transform.gameObject.tag.Equals("Bobble")) {
+                    ballTouched = true;
+                }
+            }
+        }
+        if (ballTouched) {
+            print("falling");
+            return "falling";
+        } else {
+            print("notfalling");
+
+            return "notfalling";
+        }
+    }
+
     public void drawRays()
     {
         // Define all 6 direction that need to be checked
@@ -76,6 +102,5 @@ public class raycasting : MonoBehaviour
         rays[3] = new Ray(transform.position, Vector3.right); // Right
         rays[4] = new Ray(transform.position, (Vector3.right + Vector3.down).normalized); // Down Right
         rays[5] = new Ray(transform.position, (Vector3.left + Vector3.down).normalized); // Down left
-
     }
 }

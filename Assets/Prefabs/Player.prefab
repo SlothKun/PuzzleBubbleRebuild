@@ -70,8 +70,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 9a3386b350a9eff4a97bd77b26b61522, type: 3}
+  m_SortingOrder: 1
+  m_Sprite: {fileID: 21300000, guid: bbf5c132fd5ab0c478d49ca489396465, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -383,10 +383,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 920861199}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.0000012436, y: 0.00000031089, z: 0}
+  m_LocalPosition: {x: 1.0640008, y: 2.702, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1463935312}
+  m_Father: {fileID: 2805195616620798969}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &920861201
@@ -1002,7 +1002,7 @@ Transform:
   m_LocalPosition: {x: 0.45, y: 1.296, z: 0}
   m_LocalScale: {x: 0.38344276, y: 0.38344276, z: 0.38344276}
   m_Children:
-  - {fileID: 920861200}
+  - {fileID: 2805195616620798969}
   - {fileID: 1951134919}
   - {fileID: 192952825}
   - {fileID: 1186646536}
@@ -1049,7 +1049,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: -1
-  m_Sprite: {fileID: 21300000, guid: 113403d7db75835458f02b9d2e4320d5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f517f68a7d2dff94ba36c8aecc31a303, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1716,6 +1716,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &2805195616620798968
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2805195616620798969}
+  m_Layer: 0
+  m_Name: Crank pivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2805195616620798969
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2805195616620798968}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.064, y: -2.702, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 920861200}
+  m_Father: {fileID: 1463935312}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3264352439623461155
 GameObject:
   m_ObjectHideFlags: 0
@@ -1766,6 +1797,7 @@ MonoBehaviour:
   waitingPosition: {fileID: 3264352440051399886}
   loadPosition: {fileID: 5995438865695964010}
   Ball: {fileID: 8482634536025766295, guid: 7a983c2e7663ede4582cd3a962ac4979, type: 3}
+  Crank: {fileID: 2805195616620798968}
   timeToWaitSpot: 1.5
   Player: {fileID: 5995438866292214412}
 --- !u!1 &3264352440051399881

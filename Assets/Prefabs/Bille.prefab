@@ -119,9 +119,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 372834dd617c30745a3489b35a7d6d62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gridScript: {fileID: 0}
   closestPlace: {fileID: 0}
+  otherBalls: []
+  gridScript: {fileID: 0}
   moveSpeed: 8
+  reflectOffset: 0.01
   isMoving: 0
   Shot: 0
   Placed: 0
@@ -145,6 +147,9 @@ MonoBehaviour:
   - Black
   - Purple
   myColor: 
+  startingColor: 
+  falling: 0
+  starterBobble: 0
 --- !u!114 &4384477368270537021
 MonoBehaviour:
   m_ObjectHideFlags: 0

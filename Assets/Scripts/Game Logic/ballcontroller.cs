@@ -93,22 +93,16 @@ public class ballcontroller : MonoBehaviour
                         }
                     }
                     
+                    // If ball is falling, change its state
                     if (roofhit == false && falling == true) {
                         foreach (Transform ball in set) {
-                            DestroyBall(ball);
-                            //ball.gameObject.GetComponent<BallIdentity>().falling = true;
+                            ball.gameObject.GetComponent<BallIdentity>().falling = true;
 
                             //Debug only
-                            //ball.gameObject.GetComponent<BallIdentity>().myColor = "Green";
-                            // v Remove public when done debugging v
-                            //ball.gameObject.GetComponent<BallIdentity>().DisplayColor();
+                            //DestroyBall(ball);
                         }
                     }
-                }
-
-                // Make sure neighbours is cleared
-                // end
-                
+                }  
             }
 
             neighboursSet.Clear();

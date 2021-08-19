@@ -32,7 +32,7 @@ public class raycasting : MonoBehaviour
                         
                         if (!blacklist.Contains(hit.transform)) {
                             // Visual debug
-                            Debug.DrawRay(transform.position, hitPos, Color.green);
+                            //Debug.DrawRay(transform.position, hitPos, Color.green);
                             surrounding.Add(hit.transform);
                         }
                     }
@@ -70,13 +70,14 @@ public class raycasting : MonoBehaviour
     public string IsBallFalling() {
         RaycastHit hit;
         bool ballTouched = false;
-        for (int i=1; i < 2; i++) {
+        drawRays();
+        
+        for (int i=1; i <= 2; i++) {
             if (Physics.Raycast(rays[i], out hit, rayLength)) {
                 Vector3 hitPos = hit.transform.position - transform.position;
-                Debug.DrawRay(transform.position, hitPos, Color.red);
-                print(hit.transform.gameObject.tag);
+                // Visual debug
+                //Debug.DrawRay(transform.position, hitPos, Color.green);
                 if (hit.transform.gameObject.tag.Equals("Roof")) {
-                    print("roof !");
                     return "roof";
                 } else if (hit.transform.gameObject.tag.Equals("Bobble")) {
                     ballTouched = true;
@@ -84,11 +85,8 @@ public class raycasting : MonoBehaviour
             }
         }
         if (ballTouched) {
-            print("falling");
             return "falling";
         } else {
-            print("notfalling");
-
             return "notfalling";
         }
     }

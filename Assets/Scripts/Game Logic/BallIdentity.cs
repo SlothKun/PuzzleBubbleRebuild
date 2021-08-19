@@ -7,12 +7,14 @@ public class BallIdentity : MonoBehaviour
     [SerializeField] private string[] possibleColors;
     public string myColor;
     public string startingColor;
+    public bool falling; // Added
     private Animator thisRenderer;
 
     public bool starterBobble;
 
     private void Awake()
     {
+        falling = false; // Added
         AssignColor();
         thisRenderer = GetComponent<Animator>();
     }

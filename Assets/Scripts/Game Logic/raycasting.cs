@@ -37,21 +37,45 @@ public class raycasting : MonoBehaviour
                         }
                     }
                 }
-
             }
         }
         return surrounding;
     }
 
 
+    public List<Transform> FindSet(HashSet<Transform> comboBalls) {
+        bool newadd = true;
+        List<Transform> tempDetected = new List<Transform>();
+        List<Transform> set = new List<Transform>();
+        HashSet<Transform> blacklist = new HashSet<Transform>();
+        Transform currentBall = transform;
+
+        set.Add(currentBall);
+        blacklist.Add(currentBall);
+        blacklist.UnionWith(comboBalls);
+        while (newadd) {
+            tempDetected.Clear();
+            newadd = false;
+            foreach (Transform ball in set) {
+                tempDetected.AddRange(ball.gameObject.GetComponent<raycasting>().GetSurrounding(blacklist, false));
+                blacklist.UnionWith(tempDetected);
+                if (tempDetected.Count != 0) newadd = true;
+            }
+            set.AddRange(tempDetected);
+        }
+        print("Set : " + set.Count);
+        return set;
+    }
+
     public void drawRays()
     {
         // Define all 6 direction that need to be checked
-        rays[0] = new Ray(transform.position, Vector3.left);
-        rays[1] = new Ray(transform.position, (Vector3.left + Vector3.up).normalized);
-        rays[2] = new Ray(transform.position, (Vector3.right + Vector3.up).normalized);
-        rays[3] = new Ray(transform.position, Vector3.right);
-        rays[4] = new Ray(transform.position, (Vector3.left + Vector3.down).normalized);
-        rays[5] = new Ray(transform.position, (Vector3.right + Vector3.down).normalized);
+        rays[0] = new Ray(transform.position, Vector3.left); // Left
+        rays[1] = new Ray(transform.position, (Vector3.left + Vector3.up).normalized); // Top Left
+        rays[2] = new Ray(transform.position, (Vector3.right + Vector3.up).normalized); // Top right
+        rays[3] = new Ray(transform.position, Vector3.right); // Right
+        rays[4] = new Ray(transform.position, (Vector3.right + Vector3.down).normalized); // Down Right
+        rays[5] = new Ray(transform.position, (Vector3.left + Vector3.down).normalized); // Down left
+
     }
 }

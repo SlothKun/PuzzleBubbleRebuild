@@ -108,6 +108,28 @@ public class BallBehaviour : MonoBehaviour
         GetComponent<raycasting>().drawRays();
     }
 
+    public void DestroyBall(GameObject ball)
+    {
+        StartCoroutine("vanishTimeOut", ball);
+        Color tmp = ball.GetComponent<SpriteRenderer>().color;
+        tmp.a = 0f;
+        ball.GetComponent<SpriteRenderer>().color = tmp;
+        ball.GetComponent<BallBehaviour>().otherBalls.Remove(ball.gameObject);
+        ball.GetComponentInChildren<ParticleSystem>().Play();
+        
+    }
+
+    private IEnumerator vanishTimeOut(GameObject ball)
+    {
+        yield return new WaitForSeconds(0.5f);
+        Destroy(ball.gameObject);
+    }
+
+    public void Fall(GameObject ball)
+    {
+        ball.gameObject.GetComponent<BallBehaviour>().otherBalls.Remove(ball.gameObject);
+    }
+
     private void OnBecameInvisible()
     {
         otherBalls.Remove(this.gameObject);

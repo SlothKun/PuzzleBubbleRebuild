@@ -66,13 +66,18 @@ public class BallBehaviour : MonoBehaviour
 
         if (Physics.CheckSphere(transform.position, 0.3f, layerMask))
         {
-            Debug.Log("Wall detected");
-
             RaycastHit hit;
             if (Physics.Raycast(Origin, Direction, out hit, Mathf.Infinity, layerMask))
             {
-                Direction = Vector3.Reflect(Direction.normalized, hit.normal);
-                Origin = hit.point + reflectOffset * Direction;
+                if (hit.transform.gameObject.tag.Equals("Roof"))
+                {
+                    PlaceMe();
+                }
+                else
+                {
+                    Direction = Vector3.Reflect(Direction.normalized, hit.normal);
+                    Origin = hit.point + reflectOffset * Direction;
+                }                
             }
         }
     }

@@ -4,18 +4,22 @@ using UnityEngine;
 
 public class BallBehaviour : MonoBehaviour
 {
-    [Header("In Game")]
+    [Header("Grid tracking")]
     public Transform closestPlace;
     public List<GameObject> otherBalls = new List<GameObject>();
     [SerializeField] private GridScript gridScript;    
 
+    [Header ("Stats")]
     [SerializeField] private float moveSpeed;
     [SerializeField] private float fallSpeed;
     [SerializeField] private float reflectOffset;
+
+    [Header ("Checks")]
     public bool isMoving;
     public bool Shot;
     public bool Placed;
     public bool Destroyed;
+
     private Vector3 Direction;
     private Vector3 Origin;
     
@@ -113,6 +117,34 @@ public class BallBehaviour : MonoBehaviour
         closestPlace.gameObject.GetComponent<GridPlace>().Bobble = this.gameObject;
         isMoving = false;
         GetComponent<raycasting>().drawRays();
+    }
+
+    public void LowerMe(Vector3 newPos)
+    {
+        closestPlace.gameObject.GetComponent<GridPlace>().occupied = true;
+        closestPlace.gameObject.GetComponent<GridPlace>().Bobble = this.gameObject;
+
+        transform.position -= newPos;
+
+        foreach (Transform placement in gridScript.gridPlace)
+        {
+            if (!placement.gameObject.GetComponent<GridPlace>().occupied)
+            {
+                if (!closestPlace)
+                {
+                    closestPlace = placement;
+                }
+
+                if (Vector3.Distance(placement.position, transform.position) <= Vector3.Distance(closestPlace.position, transform.position))
+                {
+                    closestPlace = placement;
+                }
+            }
+        }
+
+        transform.position = closestPlace.position;
+        closestPlace.gameObject.GetComponent<GridPlace>().occupied = true;
+        closestPlace.gameObject.GetComponent<GridPlace>().Bobble = this.gameObject;
     }
 
     public void DestroyBall(GameObject ball)

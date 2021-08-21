@@ -4,17 +4,22 @@ using UnityEngine;
 
 public class BallBehaviour : MonoBehaviour
 {
-    [Header("In Game")]
+    [Header("Grid tracking")]
     public Transform closestPlace;
     public List<GameObject> otherBalls = new List<GameObject>();
     [SerializeField] private GridScript gridScript;    
 
+    [Header ("Stats")]
     [SerializeField] private float moveSpeed;
     [SerializeField] private float fallSpeed;
     [SerializeField] private float reflectOffset;
+
+    [Header ("Checks")]
     public bool isMoving;
     public bool Shot;
     public bool Placed;
+    public bool Destroyed;
+
     private Vector3 Direction;
     private Vector3 Origin;
     
@@ -56,7 +61,7 @@ public class BallBehaviour : MonoBehaviour
     {
         foreach(GameObject bobble in otherBalls)
         {
-            if (!bobble.Equals(this.gameObject) && !bobble.GetComponent<BallIdentity>().falling)
+            if (!bobble.Equals(this.gameObject) && !bobble.GetComponent<BallIdentity>().falling && !Destroyed)
             {
                 if (Vector3.Distance(transform.position, bobble.transform.position) <= 0.6f)
                 {
@@ -70,7 +75,7 @@ public class BallBehaviour : MonoBehaviour
     {
         int layerMask = 1 << 7;
 
-        if (Physics.CheckSphere(transform.position, 0.3f, layerMask))
+        if (Physics.CheckSphere(transform.position, 0.1f, layerMask))
         {
             RaycastHit hit;
             if (Physics.Raycast(Origin, Direction, out hit, Mathf.Infinity, layerMask))
@@ -114,8 +119,37 @@ public class BallBehaviour : MonoBehaviour
         GetComponent<raycasting>().drawRays();
     }
 
+    public void LowerMe(Vector3 newPos)
+    {
+        closestPlace.gameObject.GetComponent<GridPlace>().occupied = true;
+        closestPlace.gameObject.GetComponent<GridPlace>().Bobble = this.gameObject;
+
+        transform.position -= newPos;
+
+        foreach (Transform placement in gridScript.gridPlace)
+        {
+            if (!placement.gameObject.GetComponent<GridPlace>().occupied)
+            {
+                if (!closestPlace)
+                {
+                    closestPlace = placement;
+                }
+
+                if (Vector3.Distance(placement.position, transform.position) <= Vector3.Distance(closestPlace.position, transform.position))
+                {
+                    closestPlace = placement;
+                }
+            }
+        }
+
+        transform.position = closestPlace.position;
+        closestPlace.gameObject.GetComponent<GridPlace>().occupied = true;
+        closestPlace.gameObject.GetComponent<GridPlace>().Bobble = this.gameObject;
+    }
+
     public void DestroyBall(GameObject ball)
     {
+        Destroyed = true;
         StartCoroutine("vanishTimeOut", ball);
         Color tmp = ball.GetComponent<SpriteRenderer>().color;
         tmp.a = 0f;

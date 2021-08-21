@@ -69,7 +69,6 @@ public class raycasting : MonoBehaviour
 
     public string IsBallFalling() {
         RaycastHit hit;
-        bool ballTouched = false;
         drawRays();
         
         for (int i=1; i <= 2; i++) {
@@ -79,16 +78,11 @@ public class raycasting : MonoBehaviour
                 //Debug.DrawRay(transform.position, hitPos, Color.green);
                 if (hit.transform.gameObject.tag.Equals("Roof")) {
                     return "roof";
-                } else if (hit.transform.gameObject.tag.Equals("Bobble")) {
-                    ballTouched = true;
                 }
             }
         }
-        if (ballTouched) {
-            return "falling";
-        } else {
-            return "notfalling";
-        }
+
+        return "falling";
     }
 
     public void drawRays()

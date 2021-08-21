@@ -4986,11 +4986,12 @@ MonoBehaviour:
   otherBalls: []
   gridScript: {fileID: 0}
   moveSpeed: 8
-  fallSpeed: 15
+  fallSpeed: 12
   reflectOffset: 0.01
   isMoving: 0
   Shot: 0
   Placed: 0
+  Destroyed: 0
 --- !u!114 &5234628794548643873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5003,13 +5004,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6f5ccc4d0da5f2458f3c48347793b88, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  possibleColors:
-  - Red
-  - Yellow
-  - Green
-  - Blue
-  - Black
-  - Purple
   currentColors: []
   otherBalls: []
   myColor: 

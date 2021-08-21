@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class BallIdentity : MonoBehaviour
 {
-    [SerializeField] private string[] possibleColors;
     [SerializeField] private List<string> currentColors = new List<string>();
     [SerializeField] private List<GameObject> otherBalls = new List<GameObject>();
     public string myColor;

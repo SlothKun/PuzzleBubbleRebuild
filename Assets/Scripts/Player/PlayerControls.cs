@@ -30,6 +30,11 @@ public class PlayerControls : MonoBehaviour
         rotationMagnitude = 0;
     }
 
+    private void Update()
+    {
+        directionToShoot = transform.up;
+    }
+
     public void OnTurningLeft(InputAction.CallbackContext button)
     {
         if (button.performed)
@@ -77,7 +82,6 @@ public class PlayerControls : MonoBehaviour
     {
         if (button.performed && isLoaded)
         {
-            directionToShoot = transform.up;
             loadedBall.GetComponent<BallBehaviour>().OnShooting(directionToShoot);
             isLoaded = false;
             loadedBall.GetComponent<ballcontroller>().lastShot = true;

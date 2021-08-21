@@ -10,7 +10,6 @@ public class BallBehaviour : MonoBehaviour
     [SerializeField] private GridScript gridScript;    
 
     [SerializeField] private float moveSpeed;
-    [SerializeField] private float fallSpeed;
     [SerializeField] private float reflectOffset;
     public bool isMoving;
     public bool Shot;
@@ -36,11 +35,6 @@ public class BallBehaviour : MonoBehaviour
             DetectWall();
             DetectCollision();
         }
-
-        if (GetComponent<BallIdentity>().falling)
-        {
-            transform.position += -Vector3.up * Time.fixedDeltaTime * fallSpeed;
-        }
     }
 
     public void OnShooting(Vector3 canonDirection)
@@ -56,7 +50,7 @@ public class BallBehaviour : MonoBehaviour
     {
         foreach(GameObject bobble in otherBalls)
         {
-            if (!bobble.Equals(this.gameObject) && !bobble.GetComponent<BallIdentity>().falling)
+            if (!bobble.Equals(this.gameObject))
             {
                 if (Vector3.Distance(transform.position, bobble.transform.position) <= 0.6f)
                 {
@@ -112,28 +106,6 @@ public class BallBehaviour : MonoBehaviour
         closestPlace.gameObject.GetComponent<GridPlace>().Bobble = this.gameObject;
         isMoving = false;
         GetComponent<raycasting>().drawRays();
-    }
-
-    public void DestroyBall(GameObject ball)
-    {
-        StartCoroutine("vanishTimeOut", ball);
-        Color tmp = ball.GetComponent<SpriteRenderer>().color;
-        tmp.a = 0f;
-        ball.GetComponent<SpriteRenderer>().color = tmp;
-        ball.GetComponent<BallBehaviour>().otherBalls.Remove(ball.gameObject);
-        ball.GetComponentInChildren<ParticleSystem>().Play();
-        
-    }
-
-    private IEnumerator vanishTimeOut(GameObject ball)
-    {
-        yield return new WaitForSeconds(0.5f);
-        Destroy(ball.gameObject);
-    }
-
-    public void Fall(GameObject ball)
-    {
-        ball.gameObject.GetComponent<BallBehaviour>().otherBalls.Remove(ball.gameObject);
     }
 
     private void OnBecameInvisible()

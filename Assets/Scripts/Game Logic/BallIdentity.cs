@@ -5,8 +5,6 @@ using UnityEngine;
 public class BallIdentity : MonoBehaviour
 {
     [SerializeField] private string[] possibleColors;
-    [SerializeField] private List<string> currentColors = new List<string>();
-    [SerializeField] private List<GameObject> otherBalls = new List<GameObject>();
     public string myColor;
     public string startingColor;
     public bool falling; // Added
@@ -26,26 +24,11 @@ public class BallIdentity : MonoBehaviour
         DisplayColor();
     }
 
-    private void CheckOtherBalls()
-    {
-        otherBalls.AddRange(GameObject.FindGameObjectsWithTag("Bobble"));
-
-        foreach (GameObject ball in otherBalls)
-        {
-            string newColor = ball.GetComponent<BallIdentity>().myColor;
-            if (!currentColors.Contains(newColor))
-            {
-                currentColors.Add(newColor);
-            }
-        }
-    }
-
     void AssignColor()
     {
         if (!starterBobble)
         {
-            CheckOtherBalls();
-            myColor = currentColors[Random.Range(0, currentColors.Count - 1)];
+            myColor = possibleColors[Random.Range(0, possibleColors.Length)];
         }
         else
         {

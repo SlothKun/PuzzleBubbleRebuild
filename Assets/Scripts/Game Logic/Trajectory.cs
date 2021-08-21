@@ -4,56 +4,70 @@ using UnityEngine;
 
 public class Trajectory : MonoBehaviour
 {
-    public int nbrPoints;
-    public int TotalBounce = 3;
     public float LineOffset = 0.01f;
 
-    public GameObject pointsPref;
-    public GameObject[] Points;
+    private Vector3 direction;
 
-    RaycastHit hit;
+    [SerializeField] private GameObject canonTip;
+    private Vector3 startPosition;
 
-    public Vector3 currentPointPos;
-    public Vector3 direction;
-
-    public PlayerControls cannon;
+    [SerializeField] private PlayerControls canon;
+    [SerializeField] private LineRenderer lineRenderer;
     
-    public void Start()
+    private void Start()
     {
-        Points = new GameObject[nbrPoints];
-        for (int i = 0; i < nbrPoints; i++)
-        {
-            Points[i] = Instantiate(pointsPref, transform.position, transform.rotation); //On fait spawn un certain nombre de point
-        }
+        lineRenderer = GetComponent<LineRenderer>();
+        canon = GetComponent<PlayerControls>();
+
+        lineRenderer.positionCount = 3;
     }
 
-    public void Update()
+    private void Update()
     {
-        direction = cannon.directionToShoot;
+        startPosition = canonTip.transform.position;
+        lineRenderer.SetPosition(0, startPosition);
+        direction = canon.directionToShoot;
 
-        for (int i = 0; i < Points.Length; i++)
-        {
-            Points[i].transform.position = CalculatePosition(1f * i); //On place les points
-            ReflectOnCollision(Points[i].transform.position); //Reflect en contact d'un mur
-        }
+        ReflectOnCollision();
     }
 
-    public Vector3 CalculatePosition(float time)
+    private void ReflectOnCollision()
     {
-        Vector3 currentPointPos = transform.position + transform.up * time; //Gere la separation entre les points
-        return currentPointPos;
-    }
+        Vector3 origin = startPosition + LineOffset * direction;
+        RaycastHit hit;
+        int layerMask = 1 << 7 | 1 << 6;
 
-    public void ReflectOnCollision(Vector3 position)
-    {
-        Vector3 origin = cannon.gameObject.transform.position + LineOffset * direction;
-
-        for (int x = 1; x < TotalBounce; x++)
+        if (Physics.Raycast(origin, direction, out hit, Mathf.Infinity, layerMask))
         {
-            if (Physics.Raycast(origin, direction, out hit))
+            if (hit.transform.gameObject.tag.Equals("Walls"))
             {
+                lineRenderer.SetPosition(1, hit.point);
+
                 direction = Vector3.Reflect(direction.normalized, hit.normal);
-                origin = hit.point + LineOffset * direction;
+                origin = hit.point + LineOffset * direction;                
+
+                RaycastHit secondHit;
+                if(Physics.Raycast(origin, direction, out secondHit, Mathf.Infinity, layerMask))
+                {
+                    if (secondHit.transform.gameObject.tag.Equals("Bobble") && secondHit.transform.gameObject.GetComponent<BallBehaviour>().Placed)
+                    {
+                        lineRenderer.SetPosition(2, secondHit.point);
+                    }
+                    else if (secondHit.transform.gameObject.tag.Equals("Roof"))
+                    {
+                        lineRenderer.SetPosition(2, secondHit.point);
+                    }
+                }
+            }
+            else if(hit.transform.gameObject.tag.Equals("Bobble") && hit.transform.gameObject.GetComponent<BallBehaviour>().Placed)
+            {
+                lineRenderer.SetPosition(1, hit.point);
+                lineRenderer.SetPosition(2, hit.point);
+            }
+            else if (hit.transform.gameObject.tag.Equals("Roof"))
+            {
+                lineRenderer.SetPosition(1, hit.point);
+                lineRenderer.SetPosition(2, hit.point);
             }
         }
     }

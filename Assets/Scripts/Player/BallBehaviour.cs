@@ -71,7 +71,7 @@ public class BallBehaviour : MonoBehaviour
     {
         int layerMask = 1 << 7;
 
-        if (Physics.CheckSphere(transform.position, 0.3f, layerMask))
+        if (Physics.CheckSphere(transform.position, 0.1f, layerMask))
         {
             RaycastHit hit;
             if (Physics.Raycast(Origin, Direction, out hit, Mathf.Infinity, layerMask))

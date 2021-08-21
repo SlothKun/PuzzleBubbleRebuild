@@ -15,6 +15,7 @@ public class BallBehaviour : MonoBehaviour
     public bool isMoving;
     public bool Shot;
     public bool Placed;
+    public bool Destroyed;
     private Vector3 Direction;
     private Vector3 Origin;
     
@@ -56,7 +57,7 @@ public class BallBehaviour : MonoBehaviour
     {
         foreach(GameObject bobble in otherBalls)
         {
-            if (!bobble.Equals(this.gameObject) && !bobble.GetComponent<BallIdentity>().falling)
+            if (!bobble.Equals(this.gameObject) && !bobble.GetComponent<BallIdentity>().falling && !Destroyed)
             {
                 if (Vector3.Distance(transform.position, bobble.transform.position) <= 0.6f)
                 {
@@ -116,6 +117,7 @@ public class BallBehaviour : MonoBehaviour
 
     public void DestroyBall(GameObject ball)
     {
+        Destroyed = true;
         StartCoroutine("vanishTimeOut", ball);
         Color tmp = ball.GetComponent<SpriteRenderer>().color;
         tmp.a = 0f;

@@ -4988,6 +4988,7 @@ MonoBehaviour:
   moveSpeed: 8
   fallSpeed: 12
   reflectOffset: 0.01
+  scoreToAdd: 10
   isMoving: 0
   Shot: 0
   Placed: 0

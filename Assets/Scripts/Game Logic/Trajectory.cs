@@ -70,7 +70,5 @@ public class Trajectory : MonoBehaviour
                 lineRenderer.SetPosition(2, hit.point);
             }
         }
-
-        lineRenderer.material.SetTextureScale("_MainTex", new Vector2 (0.2f, 0.2f));
     }
 }

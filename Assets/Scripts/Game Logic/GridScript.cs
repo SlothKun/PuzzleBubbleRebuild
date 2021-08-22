@@ -12,6 +12,9 @@ public class GridScript : MonoBehaviour
 
     public float timeBetweenLowerings;
 
+    [SerializeField] private AudioSource soundSpeaker;
+    [SerializeField] private AudioClip[] soundClip;
+
     private void Start()
     {
         startPos = transform.position;
@@ -31,6 +34,11 @@ public class GridScript : MonoBehaviour
         }
 
         StartCoroutine("LowerGrid");
+    }
+
+    public void ClearBallsSound()
+    {
+        soundSpeaker.PlayOneShot(soundClip[0]);
     }
 
     public void ReturnToOrigin()

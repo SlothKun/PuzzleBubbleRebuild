@@ -8,6 +8,7 @@ TagManager:
   - Bobble
   - Walls
   - Roof
+  - GameManager
   layers:
   - Default
   - TransparentFX

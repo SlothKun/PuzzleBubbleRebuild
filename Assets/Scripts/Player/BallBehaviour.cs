@@ -196,6 +196,7 @@ public class BallBehaviour : MonoBehaviour
     public void Fall(GameObject ball)
     {
         ball.gameObject.GetComponent<BallBehaviour>().otherBalls.Remove(ball.gameObject);
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().AddScore(scoreToAdd * 3);
     }
 
     private void OnBecameInvisible()

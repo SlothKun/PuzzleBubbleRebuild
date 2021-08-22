@@ -23,7 +23,6 @@ public class BallBehaviour : MonoBehaviour
 
     private Vector3 Direction;
     private Vector3 Origin;
-    private GameManager manager;
 
     private void Start()
     {
@@ -177,6 +176,8 @@ public class BallBehaviour : MonoBehaviour
 
     public void DestroyBall(GameObject ball)
     {
+        gridScript.ClearBallsSound();
+        GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>().AddScore(scoreToAdd);
         Destroyed = true;
         StartCoroutine("vanishTimeOut", ball);
         Color tmp = ball.GetComponent<SpriteRenderer>().color;
@@ -184,8 +185,6 @@ public class BallBehaviour : MonoBehaviour
         ball.GetComponent<SpriteRenderer>().color = tmp;
         ball.GetComponent<BallBehaviour>().otherBalls.Remove(ball.gameObject);
         ball.GetComponentInChildren<ParticleSystem>().Play();
-        gridScript.ClearBallsSound();
-        manager.SendMessage("AddScore", scoreToAdd);
     }
 
     private IEnumerator vanishTimeOut(GameObject ball)

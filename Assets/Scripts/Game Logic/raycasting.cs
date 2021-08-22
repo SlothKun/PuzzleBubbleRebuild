@@ -17,6 +17,7 @@ public class raycasting : MonoBehaviour
     // Added
     public List<Transform> GetSurrounding(HashSet<Transform> blacklist, bool colorCheck) 
     {
+        drawRays();
         RaycastHit hit;
         List<Transform> surrounding = new List<Transform>();
         
@@ -29,7 +30,6 @@ public class raycasting : MonoBehaviour
                     if (ballColor == hitColor || colorCheck == false) {
                         Vector3 hitPos = hit.transform.position - transform.position;  
 
-                        
                         if (!blacklist.Contains(hit.transform)) {
                             // Visual debug
                             //Debug.DrawRay(transform.position, hitPos, Color.green);
@@ -66,23 +66,22 @@ public class raycasting : MonoBehaviour
         print("Set : " + set.Count);
         return set;
     }
-
-    public string IsBallFalling() {
+    public bool IsAttachedToRoof() {
         RaycastHit hit;
         drawRays();
-        
-        for (int i=1; i <= 2; i++) {
+
+        bool attached = false;
+        for (int i=1; i < 3; i++) {
             if (Physics.Raycast(rays[i], out hit, rayLength)) {
                 Vector3 hitPos = hit.transform.position - transform.position;
                 // Visual debug
                 //Debug.DrawRay(transform.position, hitPos, Color.green);
                 if (hit.transform.gameObject.tag.Equals("Roof")) {
-                    return "roof";
+                    attached = true;
                 }
             }
         }
-
-        return "falling";
+        return attached;
     }
 
     public void drawRays()

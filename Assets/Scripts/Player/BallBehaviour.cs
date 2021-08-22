@@ -185,8 +185,9 @@ public class BallBehaviour : MonoBehaviour
         ball.GetComponent<SpriteRenderer>().color = tmp;
         ball.GetComponent<BallBehaviour>().otherBalls.Remove(ball.gameObject);
         ball.GetComponentInChildren<ParticleSystem>().Play();
-
-        manager.SendMessage("AddScore", scoreToAdd);
+        
+        // TO UNCOMMENT LATER
+        //manager.SendMessage("AddScore", scoreToAdd);
     }
 
     private IEnumerator vanishTimeOut(GameObject ball)

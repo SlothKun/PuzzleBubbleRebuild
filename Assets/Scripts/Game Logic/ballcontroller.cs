@@ -22,17 +22,21 @@ public class ballcontroller : MonoBehaviour
     }
 
     // Start is called before the first frame update
+    /*
     void Start()
     {
         ballsToBeChecked.Add(transform);
         newadd = true;
     }
+    */
 
     // Update is called once per frame
     void Update()
     {
         if (lastShot && ballBehaviour.Placed)
         {
+            ballsToBeChecked.Add(transform);
+            newadd = true;
             // Get balls combo
             while (newadd)
             {
@@ -85,27 +89,17 @@ public class ballcontroller : MonoBehaviour
                 // Check falling state
                 foreach (List<Transform> set in neighboursSet) 
                 {
-                    bool falling = false;
-                    bool roofhit = false;
-                    string state;
+                    bool falling = true;
                     foreach (Transform ball in set) 
                     {
-                        if (!roofhit) 
+                        if (falling && ball.gameObject.GetComponent<raycasting>().IsAttachedToRoof()) 
                         {
-                            state = ball.gameObject.GetComponent<raycasting>().IsBallFalling();
-                            if (state == "falling") 
-                            {
-                                falling = true;
-                            } 
-                            else if (state == "roof") 
-                            {
-                                roofhit = true;
-                            }
+                            falling = false;
                         }
                     }
                     
                     // If ball is falling, change its state
-                    if (roofhit == false && falling == true) 
+                    if (falling == true) 
                     {
                         foreach (Transform ball in set) 
                         {

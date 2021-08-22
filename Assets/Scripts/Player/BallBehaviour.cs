@@ -24,7 +24,6 @@ public class BallBehaviour : MonoBehaviour
     private Vector3 Direction;
     private Vector3 Origin;
     private GameManager manager;
-    
 
     private void Start()
     {
@@ -185,7 +184,7 @@ public class BallBehaviour : MonoBehaviour
         ball.GetComponent<SpriteRenderer>().color = tmp;
         ball.GetComponent<BallBehaviour>().otherBalls.Remove(ball.gameObject);
         ball.GetComponentInChildren<ParticleSystem>().Play();
-
+        gridScript.ClearBallsSound();
         manager.SendMessage("AddScore", scoreToAdd);
     }
 

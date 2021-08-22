@@ -4988,10 +4988,14 @@ MonoBehaviour:
   moveSpeed: 8
   fallSpeed: 12
   reflectOffset: 0.01
+  scoreToAdd: 0
   isMoving: 0
   Shot: 0
   Placed: 0
   Destroyed: 0
+  soundSpeaker: {fileID: 0}
+  soundClip:
+  - {fileID: 8300000, guid: 14263cbd98773e544bb3aa0e1076ce7d, type: 3}
 --- !u!114 &5234628794548643873
 MonoBehaviour:
   m_ObjectHideFlags: 0

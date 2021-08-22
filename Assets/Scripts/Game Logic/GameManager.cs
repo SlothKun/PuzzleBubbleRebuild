@@ -12,9 +12,17 @@ public class GameManager : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+        if (gridLogic.Victory())
+        {
+            EndRound();
+        }
+
+        if (gridLogic.Lose())
+        {
+            LoseRound();
+        }
     }
 
     private IEnumerator StartingGame()
@@ -26,11 +34,22 @@ public class GameManager : MonoBehaviour
     public void EndRound()
     {
         gridLogic.StopAllCoroutines();
+        Debug.Log("Win");
     }
 
     private IEnumerator NewRound()
     {
         yield return new WaitForSeconds(2f);
         gridLogic.ReturnToOrigin();
+    }
+
+    public void LoseRound()
+    {
+        Debug.Log("Lose");
+    }
+
+    public void AddScore()
+    {
+
     }
 }

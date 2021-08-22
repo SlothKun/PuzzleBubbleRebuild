@@ -13,6 +13,7 @@ public class BallBehaviour : MonoBehaviour
     [SerializeField] private float moveSpeed;
     [SerializeField] private float fallSpeed;
     [SerializeField] private float reflectOffset;
+    [SerializeField] private int scoreToAdd;
 
     [Header ("Checks")]
     public bool isMoving;
@@ -22,6 +23,7 @@ public class BallBehaviour : MonoBehaviour
 
     private Vector3 Direction;
     private Vector3 Origin;
+    private GameManager manager;
     
 
     private void Start()
@@ -46,6 +48,8 @@ public class BallBehaviour : MonoBehaviour
         {
             transform.position += -Vector3.up * Time.fixedDeltaTime * fallSpeed;
         }
+
+        LosingPosition();
     }
 
     public void OnShooting(Vector3 canonDirection)
@@ -65,7 +69,18 @@ public class BallBehaviour : MonoBehaviour
             {
                 if (Vector3.Distance(transform.position, bobble.transform.position) <= 0.6f)
                 {
-                    PlaceMe();
+                    float yPos = transform.localPosition.y;
+
+                    if (yPos <= -1.46)
+                    {
+                        isMoving = false;
+                        Placed = true;
+                    }
+                    else
+                    {
+                        PlaceMe();
+                    }
+                    
                 }
             }
         }
@@ -91,6 +106,20 @@ public class BallBehaviour : MonoBehaviour
                 }                
             }
         }
+    }
+
+    public bool LosingPosition()
+    {
+        LayerMask loseMask = 1 << 8;
+
+        if (Placed && Physics.CheckSphere(transform.position, 0.3f, loseMask))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }        
     }
 
     private void PlaceMe()
@@ -156,7 +185,8 @@ public class BallBehaviour : MonoBehaviour
         ball.GetComponent<SpriteRenderer>().color = tmp;
         ball.GetComponent<BallBehaviour>().otherBalls.Remove(ball.gameObject);
         ball.GetComponentInChildren<ParticleSystem>().Play();
-        
+
+        manager.SendMessage("AddScore", scoreToAdd);
     }
 
     private IEnumerator vanishTimeOut(GameObject ball)

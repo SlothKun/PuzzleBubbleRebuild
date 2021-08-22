@@ -38,4 +38,28 @@ public class GridScript : MonoBehaviour
         Roof.transform.position -= heightToLose;
         transform.position -= heightToLose;
     }
+
+    public bool Victory()
+    {
+        foreach (Transform cell in gridPlace)
+        {
+            if (cell.GetComponent<GridPlace>().Bobble)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public bool Lose()
+    {
+        foreach (Transform cell in gridPlace)
+        {
+            if (cell.GetComponent<GridPlace>().Bobble && cell.GetComponent<GridPlace>().Bobble.GetComponent<BallBehaviour>().LosingPosition())
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }

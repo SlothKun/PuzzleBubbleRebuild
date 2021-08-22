@@ -16,6 +16,14 @@ public class GridScript : MonoBehaviour
     {
         startPos = transform.position;
     }
+    void FixedUpdate()
+    {
+        if (Victory())
+        {
+            Debug.Log("Victory");
+            //DO SOMETHING
+        }
+    }
 
     private IEnumerator LowerGrid()
     {
@@ -31,11 +39,5 @@ public class GridScript : MonoBehaviour
         }
 
         StartCoroutine("LowerGrid");
-    }
-
-    public void ReturnToOrigin()
-    {
-        Roof.transform.position -= heightToLose;
-        transform.position -= heightToLose;
     }
 }

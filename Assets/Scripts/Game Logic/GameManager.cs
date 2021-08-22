@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
     public GridScript gridLogic;
+    public int score;
+    public Text scoreText;
 
     void Start()
     {
@@ -48,8 +51,9 @@ public class GameManager : MonoBehaviour
         Debug.Log("Lose");
     }
 
-    public void AddScore()
+    public void AddScore(int scoretoadd)
     {
-
+        score += scoretoadd;
+        scoreText.text = "Score : " + score;
     }
 }

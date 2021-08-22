@@ -46,6 +46,7 @@ public class BallBehaviour : MonoBehaviour
         {
             transform.position += -Vector3.up * Time.fixedDeltaTime * fallSpeed;
         }
+
     }
 
     public void OnShooting(Vector3 canonDirection)
@@ -156,7 +157,6 @@ public class BallBehaviour : MonoBehaviour
         ball.GetComponent<SpriteRenderer>().color = tmp;
         ball.GetComponent<BallBehaviour>().otherBalls.Remove(ball.gameObject);
         ball.GetComponentInChildren<ParticleSystem>().Play();
-        
     }
 
     private IEnumerator vanishTimeOut(GameObject ball)

@@ -5,6 +5,7 @@ using UnityEngine;
 public class GridScript : MonoBehaviour
 {
     private Vector3 startPos;
+    private Vector3 startRoof;
     private Vector3 heightToLose = new Vector3 (0f, 0.52f, 0f);
 
     public Transform[] gridPlace;
@@ -18,6 +19,7 @@ public class GridScript : MonoBehaviour
     private void Start()
     {
         startPos = transform.position;
+        startRoof = Roof.transform.position;
     }
 
     private IEnumerator LowerGrid()
@@ -43,8 +45,8 @@ public class GridScript : MonoBehaviour
 
     public void ReturnToOrigin()
     {
-        Roof.transform.position -= heightToLose;
-        transform.position -= heightToLose;
+        Roof.transform.position = startRoof;
+        transform.position = startPos;
     }
 
     public bool Victory()

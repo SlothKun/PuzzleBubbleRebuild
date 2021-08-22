@@ -22,6 +22,8 @@ public class PlayerControls : MonoBehaviour
 
     [SerializeField] private BallSpawn ballSpawn;
 
+    public GameManager gameManager;
+
     public Vector3 directionToShoot;
 
     private void Start()
@@ -61,7 +63,7 @@ public class PlayerControls : MonoBehaviour
 
     private void Rotate()
     {
-        if (rotationMagnitude != 0)
+        if (rotationMagnitude != 0 && gameManager.canPlay)
         {
             z += Time.fixedDeltaTime * rotationMagnitude * rotateSpeed;
 
@@ -80,7 +82,7 @@ public class PlayerControls : MonoBehaviour
 
     public void OnFire(InputAction.CallbackContext button)
     {
-        if (button.performed && isLoaded)
+        if (button.performed && isLoaded && gameManager.canPlay)
         {
             loadedBall.GetComponent<BallBehaviour>().OnShooting(directionToShoot);
             isLoaded = false;

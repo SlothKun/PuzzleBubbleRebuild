@@ -16,14 +16,6 @@ public class GridScript : MonoBehaviour
     {
         startPos = transform.position;
     }
-    void FixedUpdate()
-    {
-        if (Victory())
-        {
-            Debug.Log("Victory");
-            //DO SOMETHING
-        }
-    }
 
     private IEnumerator LowerGrid()
     {
@@ -39,5 +31,35 @@ public class GridScript : MonoBehaviour
         }
 
         StartCoroutine("LowerGrid");
+    }
+
+    public void ReturnToOrigin()
+    {
+        Roof.transform.position -= heightToLose;
+        transform.position -= heightToLose;
+    }
+
+    public bool Victory()
+    {
+        foreach (Transform cell in gridPlace)
+        {
+            if (cell.GetComponent<GridPlace>().Bobble)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public bool Lose()
+    {
+        foreach (Transform cell in gridPlace)
+        {
+            if (cell.GetComponent<GridPlace>().Bobble && cell.GetComponent<GridPlace>().Bobble.GetComponent<BallBehaviour>().LosingPosition())
+            {
+                return true;
+            }
+        }
+        return false;
     }
 }

@@ -15,7 +15,6 @@ public class GridScript : MonoBehaviour
     private void Start()
     {
         startPos = transform.position;
-        StartCoroutine("LowerGrid");
     }
     void FixedUpdate()
     {
@@ -40,24 +39,5 @@ public class GridScript : MonoBehaviour
         }
 
         StartCoroutine("LowerGrid");
-    }
-
-    public bool Victory()
-    {
-        foreach (Transform cell in gridPlace)
-        {
-            if (cell.GetComponent<GridPlace>().Bobble)
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public bool Lose()
-    {
-
-
-        return false;
     }
 }

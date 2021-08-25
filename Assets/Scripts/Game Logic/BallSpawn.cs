@@ -21,12 +21,6 @@ public class BallSpawn : MonoBehaviour
     [SerializeField] private PlayerControls Player; 
     private GameObject waitingBall; 
 
-    private void Start()
-    {
-        StartingBall();
-        SpawnNewBall();
-    }
-
     public void StartingBall()
     {
         GameObject startingBall = Instantiate(Ball, loadPosition.position, Quaternion.identity);

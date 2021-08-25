@@ -24,7 +24,7 @@ public class BallBehaviour : MonoBehaviour
     private Vector3 Direction;
     private Vector3 Origin;
 
-    private void Start()
+    private void Awake()
     {
         gridScript = GameObject.Find("Grid").GetComponent<GridScript>();
         if (GetComponent<BallIdentity>().starterBobble)
@@ -110,7 +110,7 @@ public class BallBehaviour : MonoBehaviour
     {
         LayerMask loseMask = 1 << 8;
 
-        if (Placed && Physics.CheckSphere(transform.position, 0.3f, loseMask))
+        if (Placed && Physics.CheckSphere(transform.position, 0.5f, loseMask) && !GetComponent<BallIdentity>().falling && !Destroyed)
         {
             return true;
         }
@@ -143,7 +143,12 @@ public class BallBehaviour : MonoBehaviour
         closestPlace.gameObject.GetComponent<GridPlace>().occupied = true;
         closestPlace.gameObject.GetComponent<GridPlace>().Bobble = this.gameObject;
         isMoving = false;
-        GetComponent<raycasting>().drawRays();
+
+        if (!GetComponent<BallIdentity>().starterBobble)
+        {
+            GetComponent<AudioSource>().Play();
+            GetComponent<raycasting>().drawRays();
+        }        
     }
 
     public void LowerMe(Vector3 newPos)

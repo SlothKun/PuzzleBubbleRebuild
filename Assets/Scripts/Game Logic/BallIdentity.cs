@@ -13,15 +13,11 @@ public class BallIdentity : MonoBehaviour
 
     public bool starterBobble;
 
-    private void Awake()
+    void Start()
     {
         falling = false; // Added
         AssignColor();
         thisRenderer = GetComponent<Animator>();
-    }
-
-    void Start()
-    {
         DisplayColor();
     }
 

@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 
     public bool canPlay;
 
+    public GameObject ballSpawner;
     public GameObject retryScreen;
 
     [SerializeField] private GameObject[] Level;
@@ -26,6 +27,8 @@ public class GameManager : MonoBehaviour
         canPlay = false;
         StartCoroutine("StartingGame");
         LoadLevel();
+        ballSpawner.GetComponent<BallSpawn>().StartingBall();
+        ballSpawner.GetComponent<BallSpawn>().SpawnNewBall();
     }
 
     void FixedUpdate()
@@ -51,7 +54,6 @@ public class GameManager : MonoBehaviour
     public void EndRound()
     {
         gridLogic.StopAllCoroutines();
-        currentLevel++;
         gridLogic.ReturnToOrigin();
         canPlay = false;
         Debug.Log("Win");
@@ -61,6 +63,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator NewRound()
     {
         yield return new WaitForSeconds(2f);
+        currentLevel++;
         LoadLevel();
     }
 
@@ -86,6 +89,7 @@ public class GameManager : MonoBehaviour
         }
 
         loadedLevel = Instantiate(Level[currentLevel], levelPosition, Quaternion.identity);
+        StartCoroutine("StartingGame");
     }
 
     public void ReloadGame()

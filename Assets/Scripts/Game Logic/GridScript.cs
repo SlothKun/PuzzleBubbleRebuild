@@ -15,11 +15,13 @@ public class GridScript : MonoBehaviour
 
     [SerializeField] private AudioSource soundSpeaker;
     [SerializeField] private AudioClip[] soundClip;
+    [SerializeField] private GameManager gameManager;
 
     private void Start()
     {
         startPos = transform.position;
         startRoof = Roof.transform.position;
+        gameManager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
     }
 
     private IEnumerator LowerGrid()
@@ -51,14 +53,18 @@ public class GridScript : MonoBehaviour
 
     public bool Victory()
     {
-        foreach (Transform cell in gridPlace)
+        if (gameManager.canPlay)
         {
-            if (cell.GetComponent<GridPlace>().Bobble)
+            foreach (Transform cell in gridPlace)
             {
-                return false;
+                if (cell.GetComponent<GridPlace>().Bobble)
+                {
+                    return false;
+                }
             }
+            return true;
         }
-        return true;
+        return false;
     }
 
     public bool Lose()

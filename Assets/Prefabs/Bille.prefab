@@ -5024,7 +5024,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 754894f78370beb4398ec98ccb74e0c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayLength: 0.5
+  rayLength: 0.45
   ballColor: 
   colorCheck: 
 --- !u!114 &-8310948252387856868
